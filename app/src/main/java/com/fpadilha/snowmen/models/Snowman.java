@@ -3,11 +3,19 @@ package com.fpadilha.snowmen.models;
 /**
  * Created by felipe on 08/07/2016.
  */
-public class Snowmen {
+public class Snowman {
+    public static String TABLE_NAME = "snowmen";
+    public static String ID = "name";
+    public static String LONGITUDE = "longitude";
+    public static String LATITUDE = "latitude";
+    public static String PHOTO = "photo";
+    public static String FAVORITE = "favorite";
+
     private double longitude;
     private double latitude;
     private String photo;
     private String name;
+    private boolean favorite;
 
     public double getLongitude() {
         return longitude;
@@ -39,5 +47,13 @@ public class Snowmen {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

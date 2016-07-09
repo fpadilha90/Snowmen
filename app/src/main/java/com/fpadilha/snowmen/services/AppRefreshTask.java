@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fpadilha.snowmen.R;
+import com.fpadilha.snowmen.helpers.SnowmanHelper;
+import com.fpadilha.snowmen.models.Snowman;
 import com.fpadilha.snowmen.models.response.GetSnowmenResponse;
 import com.fpadilha.snowmen.utils.Utils;
 import com.fpadilha.snowmen.ws.RestClient;
@@ -32,7 +34,8 @@ public class AppRefreshTask implements TaskCallBack {
         doInBackground();
     }
 
-    @Background void doInBackground() {
+    @Background
+    void doInBackground() {
         GetSnowmenResponse getSnowmenResponse;
         try {
 
@@ -40,6 +43,10 @@ public class AppRefreshTask implements TaskCallBack {
                 //TODO: getLocation
 
                 getSnowmenResponse = restClient.getSnowmen(-22.3749461, -49.275269, 1000);
+
+                for (Snowman snowman : getSnowmenResponse.getResults()) {
+                    SnowmanHelper.insertOrUpdate(context, snowman);
+                }
 
                 callBack.onSuccess(String.valueOf(getSnowmenResponse.getCount()));
             } else {
@@ -57,7 +64,8 @@ public class AppRefreshTask implements TaskCallBack {
         callBack.onSuccess(message);
     }
 
-    @Override public void onFailed(String error) {
+    @Override
+    public void onFailed(String error) {
         callBack.onFailed(error);
     }
 

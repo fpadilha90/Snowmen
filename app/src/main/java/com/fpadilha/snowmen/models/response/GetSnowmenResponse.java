@@ -1,6 +1,6 @@
 package com.fpadilha.snowmen.models.response;
 
-import com.fpadilha.snowmen.models.Snowmen;
+import com.fpadilha.snowmen.models.Snowman;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class GetSnowmenResponse {
     private int count;
-    private List<Snowmen> results;
+    private List<Snowman> results;
 
     public int getCount() {
         return count;
@@ -19,11 +19,11 @@ public class GetSnowmenResponse {
         this.count = count;
     }
 
-    public List<Snowmen> getResults() {
+    public List<Snowman> getResults() {
         return results;
     }
 
-    public void setResults(List<Snowmen> results) {
+    public void setResults(List<Snowman> results) {
         this.results = results;
     }
 }

@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack {
     @Override
     public void onSuccess(String message) {
         setOnThread(false);
-        Snackbar.make(tabs, message, Snackbar.LENGTH_LONG).show();
+
+
 
     }
 
