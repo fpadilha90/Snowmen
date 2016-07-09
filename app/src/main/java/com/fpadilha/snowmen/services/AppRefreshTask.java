@@ -28,9 +28,13 @@ public class AppRefreshTask implements TaskCallBack {
 
 
     TaskCallBack callBack;
+    double latitude;
+    double longitude;
 
-    public void start(TaskCallBack callBack) {
+    public void start(TaskCallBack callBack, double latitude, double longitude) {
         this.callBack = callBack;
+        this.latitude = latitude;
+        this.longitude = longitude;
         doInBackground();
     }
 
@@ -40,9 +44,7 @@ public class AppRefreshTask implements TaskCallBack {
         try {
 
             if (Utils.isOnline(context)) {
-                //TODO: getLocation
-
-                getSnowmenResponse = restClient.getSnowmen(-22.3749461, -49.275269, 1000);
+                getSnowmenResponse = restClient.getSnowmen(latitude, longitude, 1000);
 
                 Log.d("Snowmen", String.valueOf(getSnowmenResponse.getCount()));
 
