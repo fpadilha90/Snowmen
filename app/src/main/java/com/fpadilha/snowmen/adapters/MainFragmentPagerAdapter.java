@@ -15,12 +15,12 @@ import com.fpadilha.snowmen.fragments.SnowmenListFragment_;
 public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
     private String tabTitles[];
-//    private SparseArray<OnThread> map;
+    private SparseArray<OnThread> map;
     private MainActivity activity;
 
     public MainFragmentPagerAdapter(FragmentManager fm, MainActivity activity) {
         super(fm);
-//        this.map = new SparseArray<>();
+        this.map = new SparseArray<>();
         this.activity = activity;
         tabTitles = new String[]{activity.getString(R.string.title_fragment_list),
                 activity.getString(R.string.title_fragment_maps),
@@ -43,7 +43,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
         } else {
             fragment = FavoriteSnowmenListFragment_.builder().build();
         }
-//        map.put(position, (OnThread) fragment);
+        map.put(position, (OnThread) fragment);
 
         return fragment;
     }
@@ -54,11 +54,18 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
         return tabTitles[position];
     }
 
-//    public void refreshFragments() {
-//        for (int i = 0; i < map.size(); i++) {
-//            int key = map.keyAt(i);
-//            OnThread fragment = map.get(key);
-//            if (((Fragment) fragment).isAdded()) fragment.onThread(activity.onThread);
-//        }
-//    }
+    public void refreshFragments(int tab) {
+        for (int i = 0; i < map.size(); i++) {
+            int key = map.keyAt(i);
+            OnThread fragment = map.get(key);
+            if (((Fragment) fragment).isAdded() && i != tab) fragment.onThread(activity.onThread);
+        }
+    }
+    public void refreshFragments() {
+        for (int i = 0; i < map.size(); i++) {
+            int key = map.keyAt(i);
+            OnThread fragment = map.get(key);
+            if (((Fragment) fragment).isAdded()) fragment.onThread(activity.onThread);
+        }
+    }
 }

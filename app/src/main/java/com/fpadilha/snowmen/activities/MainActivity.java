@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
         }
     }
 
+    public void refreshLists(int tab){
+        adapter.refreshFragments(tab);
+    }
+    public void refreshLists(){
+        adapter.refreshFragments();
+    }
 
     @UiThread
     void setOnThread(boolean onThread) {
@@ -132,16 +138,21 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
             currentLongitude = mLastLocation.getLongitude();
 
             appRefresh();
+        }else{
+            setOnThread(false);
+            Snackbar.make(tabs, getString(R.string.err_location_needed), Snackbar.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
+        setOnThread(false);
 
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        setOnThread(false);
+        Snackbar.make(tabs, getString(R.string.err_location_needed), Snackbar.LENGTH_LONG).show();
     }
 }

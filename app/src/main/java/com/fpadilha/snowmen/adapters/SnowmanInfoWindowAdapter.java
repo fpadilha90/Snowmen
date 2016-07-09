@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.fpadilha.snowmen.R;
+import com.fpadilha.snowmen.activities.MainActivity;
 import com.fpadilha.snowmen.models.Snowman;
 import com.fpadilha.snowmen.views.SnowmanView;
 import com.fpadilha.snowmen.views.SnowmanView_;
@@ -16,14 +17,14 @@ import java.util.List;
 /**
  * Created by felipe on 09/07/2016.
  */
-public class SnowmanInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-    private final Context context;
+public class SnowmanInfoWindowAdapter implements GoogleMap.InfoWindowAdapter, ListAdapterControl {
+    private final MainActivity activity;
     private final List<Snowman>  snowmen;
 
 //    private final View myContentsView;
 
-    public SnowmanInfoWindowAdapter(Context context, List<Snowman> snowmen){
-        this.context = context;
+    public SnowmanInfoWindowAdapter(MainActivity activity, List<Snowman> snowmen){
+        this.activity = activity;
         this.snowmen = snowmen;
     }
 
@@ -33,9 +34,9 @@ public class SnowmanInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         Snowman snowman = snowmen.get(Integer.parseInt(marker.getSnippet()));
 
-        snowmanView = SnowmanView_.build(context);
+        snowmanView = SnowmanView_.build(activity);
 
-        snowmanView.bind(snowman);
+        snowmanView.bind(snowman, this);
 
         return snowmanView;
     }
@@ -43,6 +44,20 @@ public class SnowmanInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
 
-        return null;
+        final SnowmanView snowmanView;
+
+        Snowman snowman = snowmen.get(Integer.parseInt(marker.getSnippet()));
+
+        snowmanView = SnowmanView_.build(activity);
+
+        snowmanView.bind(snowman, this);
+
+        return snowmanView;
+    }
+
+    @Override
+    public void refreshList() {
+        activity.refreshLists(1);
+
     }
 }

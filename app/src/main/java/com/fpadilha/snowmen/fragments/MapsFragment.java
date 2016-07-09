@@ -9,9 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.fpadilha.snowmen.R;
+import com.fpadilha.snowmen.activities.MainActivity;
 import com.fpadilha.snowmen.adapters.SnowmanInfoWindowAdapter;
 import com.fpadilha.snowmen.helpers.SnowmanHelper;
 import com.fpadilha.snowmen.models.Snowman;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,12 +32,16 @@ import java.util.List;
 @EFragment(R.layout.maps_fragment)
 public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallback {
 
+    private MainActivity activity;
     private SupportMapFragment fragment;
     private GoogleMap map;
+    private Marker markerSelected;
+    private List<Snowman> snowmen;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        this.activity = (MainActivity) getActivity();
         FragmentManager fm = getChildFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
         if (fragment == null) {
@@ -56,7 +62,10 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
     @Override
     @UiThread
     public void onThread(boolean onThread) {
-
+        if (!onThread) {
+            map.clear();
+            fragment.getMapAsync(this);
+        }
     }
 
     @Override
@@ -73,12 +82,12 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
         map.getUiSettings().setMyLocationButtonEnabled(true);
 
         map.getUiSettings().setAllGesturesEnabled(true);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(activity.currentLatitude, activity.currentLongitude), 15.0f));
 
-
-        final List<Snowman> snowmen = SnowmanHelper.getAll(getContext());
+        snowmen = SnowmanHelper.getAll(getContext());
 
         int size = snowmen.size();
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             Snowman snowman = snowmen.get(i);
 
             Marker marker = map.addMarker(new MarkerOptions()
@@ -89,17 +98,20 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
 
         }
 
-        map.setInfoWindowAdapter(new SnowmanInfoWindowAdapter(getContext(), snowmen));
+        map.setInfoWindowAdapter(new SnowmanInfoWindowAdapter(activity, snowmen));
 
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                markerSelected = marker;
                 Snowman snowman = snowmen.get(Integer.parseInt(marker.getSnippet()));
                 snowman.setFavorite(!snowman.isFavorite());
 
                 SnowmanHelper.setFavoriteSnowman(getContext(), snowman);
 
                 marker.showInfoWindow();
+
+                activity.refreshLists(1);
 
             }
         });

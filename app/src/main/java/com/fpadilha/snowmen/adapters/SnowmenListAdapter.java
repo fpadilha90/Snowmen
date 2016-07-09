@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.fpadilha.snowmen.activities.MainActivity;
 import com.fpadilha.snowmen.helpers.SnowmanHelper;
 import com.fpadilha.snowmen.models.Snowman;
 import com.fpadilha.snowmen.views.SnowmanView;
@@ -21,10 +22,10 @@ import java.util.List;
  * Created by felipe on 08/07/2016.
  */
 @EBean
-public class SnowmenListAdapter extends BaseAdapter {
+public class SnowmenListAdapter extends BaseAdapter implements ListAdapterControl {
 
     @RootContext
-    Context context;
+    MainActivity activity;
 
     private List<Snowman> items;
 
@@ -56,19 +57,22 @@ public class SnowmenListAdapter extends BaseAdapter {
         Snowman snowman = getItem(position);
 
         if (convertView == null) {
-            snowmanView = SnowmanView_.build(context);
+            snowmanView = SnowmanView_.build(activity);
         } else {
             snowmanView = (SnowmanView) convertView;
         }
 
-        snowmanView.bind(snowman);
+        snowmanView.bind(snowman, this);
 
         return snowmanView;
     }
 
+    @Override public void refreshList() {
+        activity.refreshLists(0);
+    }
 
     public void bind() {
-        items = SnowmanHelper.getAll(context);
+        items = SnowmanHelper.getAll(activity);
 
     }
 }

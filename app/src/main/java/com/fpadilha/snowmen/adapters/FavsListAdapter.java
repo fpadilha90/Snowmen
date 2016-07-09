@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.fpadilha.snowmen.activities.MainActivity;
 import com.fpadilha.snowmen.helpers.SnowmanHelper;
 import com.fpadilha.snowmen.models.Snowman;
 import com.fpadilha.snowmen.views.SnowmanView;
@@ -21,10 +22,10 @@ import java.util.List;
  * Created by felipe on 08/07/2016.
  */
 @EBean
-public class FavsListAdapter extends BaseAdapter {
+public class FavsListAdapter extends BaseAdapter implements ListAdapterControl{
 
     @RootContext
-    Context context;
+    MainActivity activity;
 
     private List<Snowman> items;
 
@@ -57,18 +58,24 @@ public class FavsListAdapter extends BaseAdapter {
 
 //        formView = FormView_.build(activity);
         if (convertView == null) {
-            snowmanView = SnowmanView_.build(context);
+            snowmanView = SnowmanView_.build(activity);
         } else {
             snowmanView = (SnowmanView) convertView;
         }
 
-        snowmanView.bind(snowman);
+        snowmanView.bind(snowman, this);
 
         return snowmanView;
     }
 
 
     public void bind() {
-        items = SnowmanHelper.getFavorites(context);
+        items = SnowmanHelper.getFavorites(activity);
     }
+
+
+    @Override public void refreshList() {
+        activity.refreshLists();
+    }
+
 }

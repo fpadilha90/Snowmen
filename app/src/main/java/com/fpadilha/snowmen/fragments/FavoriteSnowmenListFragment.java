@@ -17,7 +17,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by felipe on 08/07/2016.
  */
 @EFragment(R.layout.list_fragment_favs)
-public class FavoriteSnowmenListFragment extends Fragment implements OnThread{
+public class FavoriteSnowmenListFragment extends Fragment implements OnThread {
 
     @ViewById
     ListView list;
@@ -25,7 +25,7 @@ public class FavoriteSnowmenListFragment extends Fragment implements OnThread{
     FavsListAdapter adapter;
 
     @AfterViews
-    void afterViews(){
+    void afterViews() {
         bindAdapter();
 
     }
@@ -39,9 +39,7 @@ public class FavoriteSnowmenListFragment extends Fragment implements OnThread{
 
     @UiThread
     void bindAdapter() {
-        if (isAdded()) {
-            list.setAdapter(adapter);
-            adapter.bind();
-        }
+        list.setAdapter(adapter);
+        adapter.bind();
     }
 }

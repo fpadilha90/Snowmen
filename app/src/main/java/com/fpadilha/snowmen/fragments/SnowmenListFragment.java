@@ -20,10 +20,13 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.list_fragment_snowmen)
 public class SnowmenListFragment extends Fragment implements OnThread {
 
-    @ViewById ListView list;
-    @Bean SnowmenListAdapter adapter;
+    @ViewById
+    ListView list;
+    @Bean
+    SnowmenListAdapter adapter;
 
-    @AfterViews void afterViews(){
+    @AfterViews
+    void afterViews() {
         bindAdapter();
 
     }
@@ -35,10 +38,9 @@ public class SnowmenListFragment extends Fragment implements OnThread {
         }
     }
 
-    @UiThread void bindAdapter() {
-        if (isAdded()) {
-            adapter.bind();
-            list.setAdapter(adapter);
-        }
+    @UiThread
+    void bindAdapter() {
+        list.setAdapter(adapter);
+        adapter.bind();
     }
 }
