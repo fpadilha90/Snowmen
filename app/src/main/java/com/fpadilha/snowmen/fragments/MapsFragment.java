@@ -3,7 +3,6 @@ package com.fpadilha.snowmen.fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,14 +34,13 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
     private MainActivity activity;
     private SupportMapFragment fragment;
     private GoogleMap map;
-    private Marker markerSelected;
     private List<Snowman> snowmen;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.activity = (MainActivity) getActivity();
-        FragmentManager fm = getChildFragmentManager();
+        FragmentManager fm = getFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
         if (fragment == null) {
             fragment = SupportMapFragment.newInstance();
@@ -84,7 +82,7 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
         map.getUiSettings().setAllGesturesEnabled(true);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(activity.currentLatitude, activity.currentLongitude), 15.0f));
 
-        snowmen = SnowmanHelper.getAll(getContext());
+        snowmen = SnowmanHelper.getAll(activity);
 
         int size = snowmen.size();
         for (int i = 0; i < size; i++) {
@@ -103,11 +101,10 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                markerSelected = marker;
                 Snowman snowman = snowmen.get(Integer.parseInt(marker.getSnippet()));
                 snowman.setFavorite(!snowman.isFavorite());
 
-                SnowmanHelper.setFavoriteSnowman(getContext(), snowman);
+                SnowmanHelper.setFavoriteSnowman(activity, snowman);
 
                 marker.showInfoWindow();
 

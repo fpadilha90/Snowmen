@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
     AppRefreshTask appRefreshTask;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    @NonConfigurationInstance
     public double currentLatitude;
+    @NonConfigurationInstance
     public double currentLongitude;
 
     @AfterViews
@@ -73,7 +75,10 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
     }
 
     protected void onStart() {
-        mGoogleApiClient.connect();
+        if (currentLatitude == 0 && currentLongitude == 0)
+            mGoogleApiClient.connect();
+        else
+            fillAdapter();
         super.onStart();
     }
 
@@ -97,10 +102,11 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
         }
     }
 
-    public void refreshLists(int tab){
+    public void refreshLists(int tab) {
         adapter.refreshFragments(tab);
     }
-    public void refreshLists(){
+
+    public void refreshLists() {
         adapter.refreshFragments();
     }
 
@@ -119,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
     @Override
     public void onFailed(String error) {
         setOnThread(false);
+        fillAdapter();
         Snackbar.make(tabs, error, Snackbar.LENGTH_LONG).show();
     }
 
@@ -138,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
             currentLongitude = mLastLocation.getLongitude();
 
             appRefresh();
-        }else{
+        } else {
             setOnThread(false);
             Snackbar.make(tabs, getString(R.string.err_location_needed), Snackbar.LENGTH_LONG).show();
         }
