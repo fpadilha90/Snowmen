@@ -9,4 +9,6 @@
     <string name="err_server_unreachable">Sorry, we get an error from server. Make a snowman while we put it all together ;D</string>
     <string name="err_location_permission">Permission needed.</string>
     <string name="err_location_needed">This app uses your current location to find beautifull snowmen. Please, turn on your GPS.</string>
+    <string name="without_snowmen">We dont have any snowmen to show... this is sad. ;(</string>
+    <string name="without_favs">You dont have any favs yet.</string>
 </resources>

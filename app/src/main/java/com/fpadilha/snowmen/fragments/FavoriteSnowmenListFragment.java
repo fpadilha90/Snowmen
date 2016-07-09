@@ -1,7 +1,9 @@
 package com.fpadilha.snowmen.fragments;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fpadilha.snowmen.R;
 import com.fpadilha.snowmen.adapters.FavsListAdapter;
@@ -21,6 +23,8 @@ public class FavoriteSnowmenListFragment extends Fragment implements OnThread {
 
     @ViewById
     ListView list;
+    @ViewById
+    TextView message;
     @Bean
     FavsListAdapter adapter;
 
@@ -41,5 +45,14 @@ public class FavoriteSnowmenListFragment extends Fragment implements OnThread {
     void bindAdapter() {
         list.setAdapter(adapter);
         adapter.bind();
+        if (isAdded()) {
+            if (adapter.getCount() == 0) {
+                message.setText(getString(R.string.without_favs));
+                message.setVisibility(View.VISIBLE);
+            } else {
+                message.setText("");
+                message.setVisibility(View.GONE);
+            }
+        }
     }
 }

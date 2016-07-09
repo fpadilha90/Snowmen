@@ -3,7 +3,9 @@ package com.fpadilha.snowmen.fragments;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fpadilha.snowmen.R;
 import com.fpadilha.snowmen.adapters.SnowmenListAdapter;
@@ -22,6 +24,8 @@ public class SnowmenListFragment extends Fragment implements OnThread {
 
     @ViewById
     ListView list;
+    @ViewById
+    TextView message;
     @Bean
     SnowmenListAdapter adapter;
 
@@ -42,5 +46,15 @@ public class SnowmenListFragment extends Fragment implements OnThread {
     void bindAdapter() {
         list.setAdapter(adapter);
         adapter.bind();
+
+        if (isAdded()) {
+            if (adapter.getCount() == 0) {
+                message.setText(getString(R.string.without_snowmen));
+                message.setVisibility(View.VISIBLE);
+            } else {
+                message.setText("");
+                message.setVisibility(View.GONE);
+            }
+        }
     }
 }
