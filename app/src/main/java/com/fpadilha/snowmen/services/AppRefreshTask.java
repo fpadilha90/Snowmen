@@ -44,8 +44,11 @@ public class AppRefreshTask implements TaskCallBack {
 
                 getSnowmenResponse = restClient.getSnowmen(-22.3749461, -49.275269, 1000);
 
+                Log.d("Snowmen", String.valueOf(getSnowmenResponse.getCount()));
+
                 for (Snowman snowman : getSnowmenResponse.getResults()) {
                     SnowmanHelper.insertOrUpdate(context, snowman);
+
                 }
 
                 callBack.onSuccess(String.valueOf(getSnowmenResponse.getCount()));

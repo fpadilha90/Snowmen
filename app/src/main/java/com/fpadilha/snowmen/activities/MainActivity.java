@@ -37,12 +37,10 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack {
 
     @AfterViews void afterViews(){
         setSupportActionBar(toolbar);
-        fillAdapter();
-
         appRefresh();
     }
 
-    private void fillAdapter() {
+    @UiThread void fillAdapter() {
         adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
@@ -66,8 +64,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack {
     @Override
     public void onSuccess(String message) {
         setOnThread(false);
-
-
+        fillAdapter();
 
     }
 

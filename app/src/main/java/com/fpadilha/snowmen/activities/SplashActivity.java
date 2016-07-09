@@ -16,7 +16,7 @@ import org.androidannotations.annotations.EActivity;
 @EActivity(R.layout.activity_splash)
 public class SplashActivity extends Activity {
 
-    private final int SPLASH_DISPLAY_DURATION = 2000;
+    private final int SPLASH_DISPLAY_DURATION = 1500;
 
     @AfterViews void afterViews(){
         new Handler().postDelayed(new Runnable(){

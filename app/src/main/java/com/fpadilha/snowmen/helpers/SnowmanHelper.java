@@ -19,7 +19,7 @@ public class SnowmanHelper {
     private static String FAVORITE = "1";
 
     public static void setFavoriteSnowman(Context c, Snowman snowman) {
-        String where = Snowman.ID + "=" + snowman.getName();
+        String where = Snowman.ID + "='" + snowman.getName() + "'";
         getDb(c).update(Snowman.TABLE_NAME, snowmanToContentValues(snowman), where, null);
     }
 
@@ -33,7 +33,7 @@ public class SnowmanHelper {
 
             snowman.setFavorite(snowmanBO.isFavorite());
 
-            String where = Snowman.ID + "=" + snowman.getName();
+            String where = Snowman.ID + "='" + snowman.getName() + "'";
             getDb(c).update(Snowman.TABLE_NAME, snowmanToContentValues(snowman), where, null);
         } else {
             getDb(c).insert(Snowman.TABLE_NAME, null, snowmanToContentValues(snowman));
@@ -85,7 +85,7 @@ public class SnowmanHelper {
         snowman.setPhoto(cursor.getString(cursor.getColumnIndex(Snowman.PHOTO)));
         snowman.setLatitude(cursor.getDouble(cursor.getColumnIndex(Snowman.LATITUDE)));
         snowman.setLongitude(cursor.getDouble(cursor.getColumnIndex(Snowman.LONGITUDE)));
-        snowman.setFavorite(cursor.getInt(cursor.getColumnIndex(Snowman.ID)) != 0);
+        snowman.setFavorite(cursor.getInt(cursor.getColumnIndex(Snowman.FAVORITE)) != 0);
 
         return snowman;
     }

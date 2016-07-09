@@ -19,7 +19,11 @@
 
     <style name="textTitle">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="textSnowman">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>
