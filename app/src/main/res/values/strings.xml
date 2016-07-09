@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">Snowmen</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_maps">Map</string>
 
     <string name="splash_message">Snowmen finder!</string>
-    <string name="title_fragment_list">Lista</string>
-    <string name="title_fragment_maps">Mapa</string>
-    <string name="title_fragment_favs">Favoritos</string>
+    <string name="title_fragment_list">List</string>
+    <string name="title_fragment_maps">Map</string>
+    <string name="title_fragment_favs">Favs</string>
+    <string name="err_without_connection">Please, check your connection and try again ;D</string>
+    <string name="err_server_unreachable">Sorry, we get an error from server. Make a snowman while we put it all together ;D</string>
 </resources>

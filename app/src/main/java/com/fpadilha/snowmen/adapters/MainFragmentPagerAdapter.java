@@ -1,4 +1,4 @@
-package com.fpadilha.snowmen.adapter;
+package com.fpadilha.snowmen.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -54,4 +54,10 @@ dependencies {
 
     /*Spring Android RestTemplate*/
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
+
+
+    /*Jackson*/
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+    /*GSON*/
+    compile 'com.google.code.gson:gson:2.4'
 }
