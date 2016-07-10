@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity implements TaskCallBack,
         }
     }
 
-    public void refreshLists(int tab) {
-        adapter.refreshFragments(tab);
+    public void refreshLists(int currentTab) {
+        adapter.refreshFragments(currentTab);
     }
 
-    public void refreshLists() {
-        adapter.refreshFragments();
+    public void refreshAllLists() {
+        adapter.refreshAllFragments();
     }
 
     @UiThread

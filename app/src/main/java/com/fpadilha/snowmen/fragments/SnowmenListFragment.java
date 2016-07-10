@@ -3,6 +3,7 @@ package com.fpadilha.snowmen.fragments;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class SnowmenListFragment extends Fragment implements OnThread {
 
     @Override
     public void onThread(boolean onThread) {
+        Log.e("Favorite OnThread", String.valueOf(onThread));
         if (!onThread) {
             bindAdapter();
         }

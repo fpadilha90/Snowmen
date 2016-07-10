@@ -38,7 +38,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
         if (position == 0) {
             fragment = SnowmenListFragment_.builder().build();
-        }  else if (position == 1) {
+        } else if (position == 1) {
             fragment = MapsFragment_.builder().build();
         } else {
             fragment = FavoriteSnowmenListFragment_.builder().build();
@@ -54,18 +54,30 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
         return tabTitles[position];
     }
 
-    public void refreshFragments(int tab) {
-        for (int i = 0; i < map.size(); i++) {
-            int key = map.keyAt(i);
-            OnThread fragment = map.get(key);
-            if (((Fragment) fragment).isAdded() && i != tab) fragment.onThread(activity.onThread);
+    public void refreshFragments(int currentTab) {
+        int size = map.size();
+        if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                int key = map.keyAt(i);
+                OnThread fragment = map.get(key);
+                if (((Fragment) fragment).isAdded() && i != currentTab)
+                    fragment.onThread(activity.onThread);
+            }
+        } else {
+            notifyDataSetChanged();
         }
     }
-    public void refreshFragments() {
-        for (int i = 0; i < map.size(); i++) {
-            int key = map.keyAt(i);
-            OnThread fragment = map.get(key);
-            if (((Fragment) fragment).isAdded()) fragment.onThread(activity.onThread);
+
+    public void refreshAllFragments() {
+        int size = map.size();
+        if (size != 0) {
+            for (int i = 0; i < map.size(); i++) {
+                int key = map.keyAt(i);
+                OnThread fragment = map.get(key);
+                if (((Fragment) fragment).isAdded()) fragment.onThread(activity.onThread);
+            }
+        } else {
+            notifyDataSetChanged();
         }
     }
 }

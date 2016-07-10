@@ -75,7 +75,7 @@ public class FavsListAdapter extends BaseAdapter implements ListAdapterControl{
 
 
     @Override public void refreshList() {
-        activity.refreshLists();
+        activity.refreshAllLists();
     }
 
 }

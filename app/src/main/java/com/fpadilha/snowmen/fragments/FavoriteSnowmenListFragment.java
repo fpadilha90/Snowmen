@@ -1,6 +1,7 @@
 package com.fpadilha.snowmen.fragments;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class FavoriteSnowmenListFragment extends Fragment implements OnThread {
 
     @Override
     public void onThread(boolean onThread) {
+        Log.e("SnowmenList OnThread", String.valueOf(onThread));
         if (!onThread) {
             bindAdapter();
         }

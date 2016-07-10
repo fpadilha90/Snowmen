@@ -3,9 +3,15 @@ package com.fpadilha.snowmen.fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.fpadilha.snowmen.R;
 import com.fpadilha.snowmen.activities.MainActivity;
@@ -35,6 +41,7 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
     private SupportMapFragment fragment;
     private GoogleMap map;
     private List<Snowman> snowmen;
+    private View view;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -50,6 +57,21 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.maps_fragment, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is */
+        }
+        return view;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (map == null) {
@@ -60,6 +82,7 @@ public class MapsFragment extends Fragment implements OnThread, OnMapReadyCallba
     @Override
     @UiThread
     public void onThread(boolean onThread) {
+        Log.e("MapFragment OnThread", String.valueOf(onThread));
         if (!onThread) {
             map.clear();
             fragment.getMapAsync(this);
